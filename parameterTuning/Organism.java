@@ -4,6 +4,8 @@
  * @version 0.0
  */
 
+import java.util.Arrays;
+
 public class Organism {
   private String name;
   private int id;
@@ -27,8 +29,8 @@ public class Organism {
    * @requires repRate, lifeSpan, conRate are positive numbers
    */
   public Organism (String name, int id,
-		   Input[] input, int[] output,
-		   int repRate, int lifeSpan, int conRate) {
+                   Input[] input, int[] output,
+                   int repRate, int lifeSpan, int conRate) {
     this.name = name;
     this.id = id;
     this.input = input;
@@ -210,5 +212,21 @@ public class Organism {
       return this.conRate;
     }
     return -1;
+  }
+
+  /**
+   * returns the organism object in String form
+   * @return String a String representation of the organism
+   * @ensures nothing is altered
+   */
+  public String toString () {
+    return "{\n  name: " + this.name +
+      "\n  id: " + this.id +
+      "\n  input: " + Arrays.toString(this.input) +
+      "\n  output: " + Arrays.toString(this.output) +
+      "\n  repRate: " + this.repRate +
+      "\n  lifeSpan: " + this.lifeSpan +
+      "\n  conRate: " + this.conRate +
+      "\n}";
   }
 }

@@ -47,7 +47,7 @@ public class Input {
    * @requires org must a valid organism
    */
   public Input (Organism org, int rel) {
-    this.id = org.getId;
+    this.id = org.getID();
     this.rel = rel;
   }
 
@@ -67,5 +67,14 @@ public class Input {
    */
   public int getRel () {
     return this.rel;
+  }
+
+  /**
+   * returns the Input object in String form
+   * @return String a String representation of the input
+   * @ensures nothing is altered
+   */
+  public String toString () {
+    return "{id: " + this.id + ", rel: " + this.rel + "}";
   }
 }
