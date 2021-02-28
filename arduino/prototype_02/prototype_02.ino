@@ -19,6 +19,10 @@
 #define BL_RXI 28
 #define BL_RTS 30
 
+#define LED    13
+
+char str[] = "words";
+
 void setup() {
   // initialize digital pin 13 as an output.
   pinMode(13, OUTPUT);
@@ -28,6 +32,7 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   Serial.println(digitalRead(BUTTON));
+  Serial.println(str);
   if (digitalRead(BUTTON) == LOW) {
     digitalWrite(13, HIGH);
   } else {
