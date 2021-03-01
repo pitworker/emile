@@ -12,7 +12,7 @@ class Organism {
 public:
   Organism(int a, int b, int c, int d, int e);
   int read();
-  String orgName(int o);
+  String readName();
   static const int ERR = -1;
 
 private:

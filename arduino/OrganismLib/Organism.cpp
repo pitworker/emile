@@ -27,7 +27,8 @@ int Organism::read() {
   return reading - 1;
 }
 
-String Organism::orgName(int o) {
+String Organism::readName() {
+  int o = read();
   String names[16] = {
     "Carnivore 1", //0
     "Detritivore", //1
@@ -46,7 +47,9 @@ String Organism::orgName(int o) {
     "Carnivore 2", //14
     "Mollusk"      //15
   };
-  if (o >= 0 && o < 16)
+  if (o == -1) {
+    return "EMPTY";
+  } else if (o >= 0 && o < 16)
     return names[o];
-  return "ERR";
+  return "UNDEFINED";
 }

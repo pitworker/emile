@@ -3,17 +3,17 @@
 // the setup function runs once when you press reset or power the board
 #define BUTTON  2
 
-#define P1_A    3
-#define P1_B    4
+#define P1_A    7
+#define P1_B    6
 #define P1_C    5
-#define P1_D    6
-#define P1_E    7
+#define P1_D    4
+#define P1_E    3
 
-#define P2_A    8
-#define P2_B    9
+#define P2_A   12
+#define P2_B   11
 #define P2_C   10
-#define P2_D   11
-#define P2_E   12
+#define P2_D    9
+#define P2_E    8
 
 #define BL_MOD 22
 #define BL_CTS 24
@@ -37,14 +37,14 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   Serial.print("p1: ");
-  Serial.print(p1.orgName(p1.read()));
+  Serial.print(p1.readName());
   Serial.print(", ");
-  Serial.println(p1.read(), BIN);
+  Serial.println(p1.read(), p1.read() >= 0 ? BIN : DEC);
 
   Serial.print("p2: ");
-  Serial.print(p2.orgName(p2.read()));
+  Serial.print(p2.readName());
   Serial.print(", ");
-  Serial.println(p2.read(), BIN);
+  Serial.println(p2.read(), p2.read() >= 0 ? BIN : DEC);
   
   /*Serial.print(digitalRead(P1_A));
   Serial.print(", ");
