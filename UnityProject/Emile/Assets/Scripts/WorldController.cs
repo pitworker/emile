@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class WorldController : MonoBehaviour
 {
-    bool has_grass = false;
-    bool has_carnivore = false;
+    public static WorldController Instance { get; private set; }
+    public Hill[] hills;
+    public string message = "hey";
 
-   // gameObject grass;
-   // gameObject carnivore; 
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("There is more than one instance!");
+            return;
+        }
+
+        Instance = this;
+    }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,25 +31,5 @@ public class NewBehaviourScript : MonoBehaviour
     void Update()
     {
         
-    }
-
-    void CreateGrass()
-    {
-        has_grass = true;
-
-    }
-
-    void CreateCarnivore()
-    {
-        has_carnivore = true;
-    }
-    void RemoveGrass()
-    {
-        has_grass = false;
-
-    }
-    void RemoveCarnivore()
-    {
-        has_carnivore = false;
     }
 }

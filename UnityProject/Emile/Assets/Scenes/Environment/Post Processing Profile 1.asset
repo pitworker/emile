@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Post Processing Profile
+  m_Name: Post Processing Profile 1
   m_EditorClassIdentifier: 
   components:
   - {fileID: 1364421831461392715}
@@ -75,6 +75,7 @@ MonoBehaviour:
   - {fileID: -4276432146669828789}
   - {fileID: 5178805172477245018}
   - {fileID: -4939242513151743679}
+  - {fileID: 4422504467419112509}
 --- !u!114 &1364421831461392715
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -91,7 +92,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -100,7 +101,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.341
+    m_Value: 1
     min: 0
     max: 1
   smoothness:
@@ -111,6 +112,36 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &4422504467419112509
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
+  m_Name: FilmGrain
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  type:
+    m_OverrideState: 1
+    m_Value: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.295
+    min: 0
+    max: 1
+  response:
+    m_OverrideState: 0
+    m_Value: 0.8
+    min: 0
+    max: 1
+  texture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
 --- !u!114 &5178805172477245018
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -130,20 +161,20 @@ MonoBehaviour:
     m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 62.57
+    m_Value: 25
     min: 0
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 946.8
+    m_Value: 80
     min: 0
   gaussianMaxRadius:
     m_OverrideState: 1
-    m_Value: 1.5
+    m_Value: 0.5
     min: 0.5
     max: 1.5
   highQualitySampling:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   focusDistance:
     m_OverrideState: 0
     m_Value: 10
@@ -185,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   threshold:
     m_OverrideState: 1
@@ -193,7 +224,7 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.31
+    m_Value: 1.79
     min: 0
   scatter:
     m_OverrideState: 1

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hill 2
+  m_Shader: {fileID: -6465566751694194690, guid: bb6a74a5db771db4096ca3acabb988bf, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_76B872E4:
+        m_Texture: {fileID: 2800000, guid: 412cb7b6ef995174c8a61d2215578c37, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_1471FA05_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 21532fdf7bf10d04a9dc2ecf9094fcb4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_FEB7E450: 0
+    m_Colors:
+    - Color_5EE5BDF4: {r: 0.48572168, g: 0.764151, b: 0.19103774, a: 0}
+    - Color_DA30490C: {r: 0.1571481, g: 0.6509434, b: 0.15045391, a: 0}
+  m_BuildTextureStacks: []
