@@ -83,6 +83,21 @@ public class Organism {
   }
 
   /**
+   * Returns an input with the given ID, or null otherwise.
+   * @param id the ID of the input in question
+   * @return Input the input with the given ID, or null otherwise
+   * @ensures nothing is altered
+   */
+  public Input getInputById (int id) {
+    for (int i = 0; i < this.input.length; i++) {
+      if (this.input[i].getID == id) {
+        return this.input[i];
+      }
+    }
+    return null;
+  }
+
+  /**
    * Returns the output array of the organism
    * @return int[] the array of output ids for the organism.
    * @ensures nothing is altered.
@@ -145,7 +160,7 @@ public class Organism {
    * Sets the input array of the organism if valid
    * @param input the new input array for the organism
    * @return int the length of the new array, -1 if invalid
-   * @ensures the input array has been set to a valid array, 
+   * @ensures the input array has been set to a valid array,
    *          nothing else altered
    */
   public int setInput (Input[] input) {
@@ -174,7 +189,7 @@ public class Organism {
    * Sets the reproduction rate of the organism, returns -1 if invalid
    * @param repRate the new reproduction rate of the organism
    * @return int the new reproduction rate, -1 if invalid
-   * @ensures the reproduction rate has been set to a valid number, 
+   * @ensures the reproduction rate has been set to a valid number,
    *          nothing else altered
    */
   public int setRepRate (int repRate) {
@@ -203,7 +218,7 @@ public class Organism {
    * Sets the consumption rate of the organism, returns -1 if invalid
    * @param conRate the new consumption rate of the organism
    * @return int the new consumption rate, -1 if invalid
-   * @ensures the consumption rate has been set to a valid number, 
+   * @ensures the consumption rate has been set to a valid number,
    *          nothing else altered
    */
   public int setConRate (int conRate) {
