@@ -82,8 +82,8 @@ public class Sim {
     boolean[] inputsNeeded = new boolean[this.orgs.length + Input.NUM_INORGS];
     //ids offset to accomodate inorganics
     int conRate = org.getConRate() * this.population[o];
-    ArrayList<int> consumptionOrgs = new ArrayList<int>();
-    ArrayList<int> consumptionDead = new ArrayList<int>();
+    ArrayList<Integer> consumptionOrgs = new ArrayList<Integer>();
+    ArrayList<Integer> consumptionDead = new ArrayList<Integer>();
 
     for (int i = 0; i < inputsNeeded.length; i++) {
       inputsNeeded[i] = org.getInputById(i - Input.NUM_INORGS) != null;
