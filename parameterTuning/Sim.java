@@ -50,25 +50,20 @@ public class Sim {
     return -1;
   }
 
-  private void kill (int[] exps) {
-    // TODO: rewrite kill to fit new framework in consume
-    /*
-    int r = this.rand.nextInt(this.SIM_LENGTH + 1);
-    if (exps[r] > 0) return r;
-    return kill(exps);
-    */
+  private void kill (int o, int n, int[] dead, int[][] exps) {
+    while (n > 0) {
+      int r = this.rand.nextInt(exps[o].length);
+      int m = this.rand.nextInt(Math.min(exps[o][r], n));
+      exps[o][r] -= m;
+      this.population[o] -= m;
+      n -= m;
+    }
   }
 
-  private void safeKill (int o, int n, int[] dead, int[][] exps) {
-    // TODO: rewrite safeKill to fit new framework in consume
-    /*
-    boolean check = false;
-    for (int i = 0; i < exps.length; i++) {
-      if (exps[i] > 0) check = true;
-    }
-    if (!check) return -1;
-    return kill(exps);
-    */
+  private int safeKill (int o, int n, int[] dead, int[][] exps) {
+    if (int n >= this.population[o]) return -1;
+    kill(o, n, dead, exps);
+    return this.population[o];
   }
 
   private void eat (int rel, ArrayList<Integer> consumption, int conRate,
@@ -81,7 +76,8 @@ public class Sim {
     int e = conRate;
     while (e > 0) {
       int r = this.rand.nextInt(consumption.size());
-      int n = this.rand.nextInt(this.population[consumption.get(r)]);
+      int n = this.rand.nextInt(Math.min(this.population[consumption.get(r)],
+                                         e));
       safeKill(consumption.get(r), n, dead, exps);
       e -= n;
     }
