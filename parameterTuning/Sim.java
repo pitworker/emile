@@ -23,8 +23,10 @@ public class Sim {
     this.orgs = orgs;
     this.population = new int[orgs.length];
     this.stability = new int[orgs.length];
-    this.inorgs = {0,0,0,0,0};
     this.rand = new Random();
+    for (int i = 0; i < this.inorgs.length; ++i) {
+      this.inorgs[i] = 0;
+    }
   }
 
   public Sim (Organism[] orgs, int initialF, int initialW, int initialL,
@@ -32,19 +34,23 @@ public class Sim {
     this.orgs = orgs;
     this.population = new int[orgs.length];
     this.stability = new int[orgs.length];
-    this.inorgs = {initialCO2, initialO2, intitialL, initialW, initialF};
+    this.inorgs[0] = initialCO2;
+    this.inorgs[1] = initialO2;
+    this.inorgs[2] = initialL;
+    this.inorgs[3] = initialW;
+    this.inorgs[4] = initialF;
     this.rand = new Random();
   }
 
   private int findOrgIndex (Organism org) {
-    for (int i = 0; i < this.orgs.length; i++) {
+    for (int i = 0; i < this.orgs.length; ++i) {
       if (this.orgs[i].getID() == org.getID()) return i;
     }
     return -1;
   }
 
   private int findOrgIndex (int id) {
-    for (int i = 0; i < this.orgs.length; i++) {
+    for (int i = 0; i < this.orgs.length; ++i) {
       if (this.orgs[i].getID() == id) return i;
     }
     return -1;
@@ -61,7 +67,7 @@ public class Sim {
   }
 
   private int safeKill (int o, int n, int[] dead, int[][] exps) {
-    if (int n >= this.population[o]) return -1;
+    if (n >= this.population[o]) return -1;
     kill(o, n, dead, exps);
     return this.population[o];
   }
@@ -91,11 +97,11 @@ public class Sim {
     ArrayList<Integer> consumptionOrgs = new ArrayList<Integer>();
     ArrayList<Integer> consumptionDead = new ArrayList<Integer>();
 
-    for (int i = 0; i < inputsNeeded.length; i++) {
+    for (int i = 0; i < inputsNeeded.length; ++i) {
       inputsNeeded[i] = org.getInputById(i - Input.NUM_INORGS) != null;
     }
 
-    for (int i = 0; i < Input.NUM_INORGS; i++) {
+    for (int i = 0; i < Input.NUM_INORGS; ++i) {
       if (inputsNeeded[i] && conRate <= this.inorgs[i]) {
         this.inorgs[i] -= conRate;
       } else if (inputsNeeded[i]) {
@@ -107,12 +113,12 @@ public class Sim {
       }
     }
 
-    for (int i = Input.NUM_INORGS; i < inputsNeeded.length; i++) {
+    for (int i = Input.NUM_INORGS; i < inputsNeeded.length; ++i) {
       int inputRel = org.getInputById(i - Input.NUM_INORGS).getRel();
       if (inputsNeeded[i] &&
           inputRel == Input.NONC &&
-          conRate > this.population(i - Input.NUM_INORGS)) {
-        int overflow = conRate - this.population(i - Input.NUM_INORGS);
+          conRate > this.population[i - Input.NUM_INORGS]) {
+        int overflow = conRate - this.population[i - Input.NUM_INORGS];
         safeKill(o,
                  (int)Math.ceil((double)overflow / org.getConRate()),
                  dead, exps);
@@ -135,27 +141,27 @@ public class Sim {
 
   private boolean checkFood (Organism org) {
     int consumableOrgs = 0;
-    int nonconsumableOrgs = 0;
+    int nonConsumableOrgs = 0;
 
     Input[] inps = org.getInput();
 
-    for (int i = 0; i < inps.length; i++) {
+    for (int i = 0; i < inps.length; ++i) {
       if (inps[i].getID() < 0 &&
           this.inorgs[(inps[i].getID() * -1) - 1] < org.getConRate()) {
         return false;
       } else if (inps[i].getID() >= 0 && inps[i].getRel() == Input.NONC) {
-        nonconsumableOrgs += this.population(findOrgIndex(inps[i].getID()));
+        nonConsumableOrgs += this.population[findOrgIndex(inps[i].getID())];
       } else if (inps[i].getID() >= 0) {
-        consumableOrgs += this.population(findOrgIndex(inps[i].getID()));
+        consumableOrgs += this.population[findOrgIndex(inps[i].getID())];
       }
     }
     return consumableOrgs >= org.getConRate() &&
-      nonconsumableOrgs >= org.getConRate();
+      nonConsumableOrgs >= org.getConRate();
   }
 
   private void produce (int o) {
-    int outs = this.orgs[o].getOutput();
-    for (int i = 0; i < outs.length; i++) {
+    int[] outs = this.orgs[o].getOutput();
+    for (int i = 0; i < outs.length; ++i) {
       this.inorgs[outs[i] * -1 - 1] +=
         this.orgs[o].getConRate() * this.population[o];
     }
@@ -172,12 +178,12 @@ public class Sim {
     //exps counts how many of a given organism should die of age at a given time
 
     //Setup the initial populations for the simulation
-    for (int i = 0; i < this.orgs.length; i++) {
+    for (int i = 0; i < this.orgs.length; ++i) {
       this.population[i] = this.orgs[i].getRepRate();
       this.stability[i] = 0;
       eaten[i] = 0;
       dead[i] = 0;
-      for (int j = 0; j < this.SIM_LENGTH; j++) {
+      for (int j = 0; j < this.SIM_LENGTH; ++j) {
         exps[i][j] = 0;
       }
       if (this.orgs[i].getLifeSpan() >= SIM_LENGTH) {
@@ -188,8 +194,8 @@ public class Sim {
     }
 
     //Run through the rounds of the population
-    for (int i = 0; i < this.SIM_LENGTH; i++) {
-      for (int j = 0; j < this.orgs.length; j++) {
+    for (int i = 0; i < this.SIM_LENGTH; ++i) {
+      for (int j = 0; j < this.orgs.length; ++j) {
         if (this.population[j] > 0) {
           this.population[j] -= exps[j][i];
           dead[j] += exps[j][i];
@@ -198,7 +204,7 @@ public class Sim {
           produce(j);
           reproduce(j, exps[j], i);
           /*
-          for (int k = 0; k < this.population[j]; k++) {
+          for (int k = 0; k < this.population[j]; ++k) {
             if (checkFood(this.orgs[j])) {
               eat(j, eaten, dead, exps[j]);
             } else {

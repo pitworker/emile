@@ -90,7 +90,7 @@ public class Organism {
    */
   public Input getInputById (int id) {
     for (int i = 0; i < this.input.length; i++) {
-      if (this.input[i].getID == id) {
+      if (this.input[i].getID() == id) {
         return this.input[i];
       }
     }
