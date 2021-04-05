@@ -59,7 +59,7 @@ public class Sim {
     */
   }
 
-  private void safeKill (int[] exps) {
+  private void safeKill (int o, int n, int[] dead, int[][] exps) {
     // TODO: rewrite safeKill to fit new framework in consume
     /*
     boolean check = false;
@@ -73,8 +73,18 @@ public class Sim {
 
   private void eat (int rel, ArrayList<Integer> consumption, int conRate,
                     int[] eaten, int[] dead, int[][] exps) {
-    //TODO: cycle through killing random organisms from consumption until
-    //      conrate is reached.
+    // c = random item from consumption
+    // n = random number from 1 to min(c.population - 1, conRate)
+    // safeKill n of c
+    // conRate -= n
+    // repeat until conRate = 0
+    int e = conRate;
+    while (e > 0) {
+      int r = this.rand.nextInt(consumption.size());
+      int n = this.rand.nextInt(this.population[consumption.get(r)]);
+      safeKill(consumption.get(r), n, dead, exps);
+      e -= n;
+    }
   }
 
   private void consume (int o, int[] eaten, int[] dead, int[][] exps) {
