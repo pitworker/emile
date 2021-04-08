@@ -25,6 +25,8 @@ public class Input {
   //ID for carbon dioxide
   public static final int CO2 = -5;
 
+  public static final int NUM_INORGS = 5;
+    
   private int id;
   private int rel;
 
