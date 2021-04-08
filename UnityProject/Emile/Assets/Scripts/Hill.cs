@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hill : MonoBehaviour
 {
     private float scale;
-    public float offset = .5f;
+    public float offset = .05f;
     public float spinSpeed = 1.0f;
 
 
@@ -14,7 +14,7 @@ public class Hill : MonoBehaviour
     {
         //unity default plane is 10x10
         scale = transform.localScale.x * 5f;
-      //  GetComponent<MeshRenderer>().sortingOrder = 100 - (int)transform.localPosition.z;
+        GetComponent<SpriteRenderer>().sortingOrder = 5000 - (int)(10 * transform.position.z);
 
     }
 
