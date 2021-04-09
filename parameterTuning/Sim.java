@@ -163,22 +163,24 @@ public class Sim {
     if (rel == Input.DED) {
       while (e > 0) {
         int r = this.rand.nextInt(consumption.size());
-        int n = this.rand.nextInt(Math.min(dead[consumption.get(r)],
+        int n = this.rand.nextInt(Math.min(dead[consumption.get(r).intValue()],
                                            e));
-        dead[consumption.get(r)] -= n;
-        eaten[consumption.get(r)] += n;
+        dead[consumption.get(r).intValue()] -= n;
+        eaten[consumption.get(r).intValue()] += n;
         e -= n;
       }
     } else if (rel == Input.CON) {
       while (e > 0) {
         int r = this.rand.nextInt(consumption.size());
-        int n = this.rand.nextInt(Math.min(this.population[consumption.get(r)],
+        int n =
+          this.rand.nextInt(Math.min(this.population[consumption.get(r)
+                                                     .intValue()],
                                            e));
         /*
           safeKill called with eaten instead of dead because eaten organisms are
           not edible to detritivores, therefore not considered dead
          */
-        safeKill(consumption.get(r), n, eaten, exps);
+        safeKill(consumption.get(r).intValue(), n, eaten, exps);
         e -= n;
       }
     }
@@ -233,10 +235,10 @@ public class Sim {
                  dead, exps);
       } else if (inputsNeeded[i] &&
                  inputRel == Input.DED) {
-        consumptionDead.add(i - Input.NUM_INORGS);
+        consumptionDead.add(Integer(i - Input.NUM_INORGS));
       } else if (inputsNeeded[i] &&
                  inputRel == Input.CON) {
-        consumptionOrgs.add(i - Input.NUM_INORGS);
+        consumptionOrgs.add(Integer(i - Input.NUM_INORGS));
       }
     }
 
