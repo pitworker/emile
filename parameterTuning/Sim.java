@@ -383,6 +383,47 @@ public class Sim {
   }
 
   /**
+   * Returns the array of organisms in the world.
+   * @return Organism[] the array of organisms in the world.
+   * @ensures nothing is altered
+   */
+  public Organism[] getOrgs() {
+    return this.orgs;
+  }
+
+  /**
+   * Returns the array of inorganic materials in the world.
+   * Note that populations are indexed by inorg ID + NUM_INORGS
+   * @return int[] the populations of inorganic materials in the world.
+   * @ensures nothing is altered
+   */
+  public int[] getInorgs() {
+    return this.inorgs;
+  }
+
+  /**
+   * Returns the array of populations of organisms in the world.
+   * Note that populations are indexed according to indices of corresponding org
+   * in orgs.
+   * @return int[] the populations of organisms in the world.
+   * @ensures nothing is altered
+   */
+  public int[] getPopulation() {
+    return this.population;
+  }
+
+  /**
+   * Returns the stability averages of populations in the world.
+   * Note that stability of organism populations indexed according to indices of
+   * corresponding organisms in orgs.
+   * @return int[] the stabilities of organisms in the world.
+   * @ensures nothing is altered
+   */
+  public int[] getStability() {
+    return this.stability;
+  }
+
+  /**
    * Outputs the current state of the simulation world as a string
    * @return String the current state of the simulation world as a string
    * @ensures nothing is altered.
