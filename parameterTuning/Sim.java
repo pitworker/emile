@@ -325,6 +325,12 @@ public class Sim {
       }
       System.out.println("]");
     }
+    System.out.println("  CO2: " + this.inorgs[Input.CO2 + Input.NUM_INORGS]);
+    System.out.println("  O2: " + this.inorgs[Input.O2 + Input.NUM_INORGS]);
+    System.out.println("  Light: " + this.inorgs[Input.L + Input.NUM_INORGS]);
+    System.out.println("  Wind: " + this.inorgs[Input.W + Input.NUM_INORGS]);
+    System.out.println("  Fertilizer: " +
+                       this.inorgs[Input.F + Input.NUM_INORGS]);
   }
 
   /**
@@ -382,12 +388,23 @@ public class Sim {
    * @ensures nothing is altered.
    */
   public String toString() {
-    // TODO: finish this method
-    String str = "{";
+    String str = "{\n";
     for (int i = 0; i < this.orgs.length; ++i) {
-      if (i > 0) str = str + ", ";
-      str = str + this.orgs.getName();
+      str = str + "  " + this.orgs[i].getName() + " {\n" +
+        "    population: " + this.population[i] + "\n" +
+        "    stability: " + this.stability[i] + "\n  }\n";
     }
+    str = str + "  CO2 {\n    population: " +
+      this.inorgs[Input.CO2 + Input.NUM_INORGS] + "\n  }\n  " +
+      "O2 {\n    population: " +
+      this.inorgs[Input.O2 + Input.NUM_INORGS] + "\n  }\n  " +
+      "Light {\n    population: " +
+      this.inorgs[Input.L + Input.NUM_INORGS] + "\n  }\n  " +
+      "Wind {\n    population: " +
+      this.inorgs[Input.W + Input.NUM_INORGS] + "\n  }\n  " +
+      "Fertilizer {\n    population: " +
+      this.inorgs[Input.F + Input.NUM_INORGS] + "\n  }\n" +
+      "}";
     return str;
   }
 }
