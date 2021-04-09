@@ -38,7 +38,8 @@ public class Tester {
 
     Organism[] orgs = {carnivore, detritivore, grazer, grass};
 
-    Sim world = new Sim (orgs, 100, 100, 100, 100, 100);
+    Sim world = new Sim (orgs, 100, Integer.MAX_VALUE, Integer.MAX_VALUE, 100,
+                         100);
 
     System.out.println(world);
 

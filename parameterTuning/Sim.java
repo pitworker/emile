@@ -113,6 +113,7 @@ public class Sim {
                        ", " + Arrays.toString(exps[o]) +
                        ")");
     */
+    /*
     ArrayList<int[]> validExps = new ArrayList<int[]>();
 
     for (int i = 0; i < exps[o].length; i++) {
@@ -121,14 +122,23 @@ public class Sim {
         validExps.add(vExp);
       }
     }
-
+    */
     while (n > 0) {
-      int r = this.rand.nextInt(validExps.size());
+      int r = this.rand.nextInt(exps[o].length);
+      if (exps[o][r] > 0) {
+        int m = this.rand.nextInt(Math.min(exps[o][r], n)) + 1;
+        exps[o][r] -= m;
+        this.population[o] -= m;
+        dead[o] += m;
+        n -= m;
+      }
+      /*
       int m = this.rand.nextInt(Math.min(validExps.get(r)[0], n)) + 1;
       exps[o][validExps.get(r)[1]] -= m;
       this.population[o] -= m;
       dead[o] += m;
       n -= m;
+      */
     }
   }
 
@@ -152,7 +162,7 @@ public class Sim {
                        + ", " + Arrays.toString(exps[o]) +
                        ")");
     */
-    if (n > this.population[o]) return -1;
+    if (n > this.population[o] || n < 0) return -1;
     kill(o, n, dead, exps);
     return this.population[o];
   }
@@ -391,6 +401,9 @@ public class Sim {
     int[] dead = new int[this.orgs.length];
     int[][] exps = new int[this.orgs.length][this.SIM_LENGTH + 1];
     //exps counts how many of a given organism should die of age at a given time
+
+    //int defLight = this.inorgs[2];
+    //int defWind = this.inorgs[3];
 
     //Setup the initial populations for the simulation
     for (int i = 0; i < this.orgs.length; ++i) {
