@@ -2,7 +2,7 @@
  * Simulates the world with the input organisms over 14 days.
  * Assigns a score based on the population of each organism by the end.
  * @author Sebastian Carpenter
- * @version 0.1
+ * @version 0.0
  */
 
 import java.util.Random;
@@ -108,12 +108,22 @@ public class Sim {
    * @ensures this.population decremented by n at index o
    */
   private void kill (int o, int n, int[] dead, int[][] exps) {
-
+    /*
     System.out.println("kill(" + o + ", " + n + ", " + Arrays.toString(dead) +
                        ", " + Arrays.toString(exps[o]) +
                        ")");
+    */
+    /*
+    ArrayList<int[]> validExps = new ArrayList<int[]>();
 
-    /*while (n > 0) {
+    for (int i = 0; i < exps[o].length; i++) {
+      if (exps[o][i] > 0) {
+        int[] vExp = {exps[o][i],i};
+        validExps.add(vExp);
+      }
+    }
+    */
+    while (n > 0) {
       int r = this.rand.nextInt(exps[o].length);
       if (exps[o][r] > 0) {
         int m = this.rand.nextInt(Math.min(exps[o][r], n)) + 1;
@@ -121,10 +131,15 @@ public class Sim {
         this.population[o] -= m;
         dead[o] += m;
         n -= m;
-        }
-        }*/
-    this.population[o] -= n;
-    dead[o] += n;
+      }
+      /*
+      int m = this.rand.nextInt(Math.min(validExps.get(r)[0], n)) + 1;
+      exps[o][validExps.get(r)[1]] -= m;
+      this.population[o] -= m;
+      dead[o] += m;
+      n -= m;
+      */
+    }
   }
 
   /**
@@ -142,11 +157,11 @@ public class Sim {
    * @ensures this.population decremented by n at index o
    */
   private int safeKill (int o, int n, int[] dead, int[][] exps) {
-
+    /*
     System.out.println("safeKill(" + o + ", " + n + ", " + Arrays.toString(dead)
                        + ", " + Arrays.toString(exps[o]) +
                        ")");
-
+    */
     if (n > this.population[o] || n < 0) return -1;
     kill(o, n, dead, exps);
     return this.population[o];
@@ -176,11 +191,9 @@ public class Sim {
     // safeKill n of c
     // conRate -= n
     // repeat until conRate = 0
-
     System.out.println("eat(" + rel + ", " + consumption + ", " + conRate + ", "
                        + Arrays.toString(eaten) + ", " + Arrays.toString(dead) +
                        ", " + Arrays.toString(exps) + ")");
-
     int e = conRate;
     if (rel == Input.DED) {
       while (e > 0) {
@@ -201,9 +214,10 @@ public class Sim {
             this.rand.nextInt(Math.min(this.population[consumption.get(r)
                                                        .intValue()],
                                        e)) + 1;
-
-          // safeKill called with eaten instead of dead because eaten organisms
-          // are not edible to detritivores, therefore not considered dead
+          /*
+            safeKill called with eaten instead of dead because eaten organisms
+            are not edible to detritivores, therefore not considered dead
+          */
           safeKill(consumption.get(r).intValue(), n, eaten, exps);
           e -= n;
         }
@@ -226,11 +240,9 @@ public class Sim {
    * @ensures nothing else is altered
    */
   private void consume (int o, int[] eaten, int[] dead, int[][] exps) {
-
     System.out.println("consume(" + o + ", " + Arrays.toString(eaten) + ", " +
                        Arrays.toString(dead) + ", " + Arrays.toString(exps) +
                        ")");
-
     Organism org = this.orgs[o];
     boolean[] inputsNeeded = new boolean[this.orgs.length + Input.NUM_INORGS];
     //ids offset to accomodate inorganics
@@ -239,12 +251,7 @@ public class Sim {
     ArrayList<Integer> consumptionDead = new ArrayList<Integer>();
 
     for (int i = 0; i < inputsNeeded.length; ++i) {
-      if (i < Input.NUM_INORGS) {
-        inputsNeeded[i] = org.getInputById(i - Input.NUM_INORGS) != null;
-      } else {
-        int index = i - Input.NUM_INORGS;
-        inputsNeeded[i] = org.getInputById(this.orgs[index].getID()) != null;
-      }
+      inputsNeeded[i] = org.getInputById(i - Input.NUM_INORGS) != null;
     }
 
     for (int i = 0; i < Input.NUM_INORGS; ++i) {
@@ -339,14 +346,12 @@ public class Sim {
    * @ensures nothing else is changed
    */
   private void reproduce (int o, int[] exps, int i) {
-
     System.out.println("reproduce(" + o + ", " + Arrays.toString(exps) +
                        ", " + i + ")");
-
-    //int index = Math.min(i + this.orgs[o].getLifeSpan(), exps.length - 1);
+    int index = Math.min(i + this.orgs[o].getLifeSpan(), exps.length - 1);
     int offspring = this.orgs[o].getRepRate() * this.population[o];
     this.population[o] += offspring;
-    //exps[index] += offspring;
+    exps[index] += offspring;
   }
 
   /**
@@ -409,13 +414,11 @@ public class Sim {
       for (int j = 0; j < this.SIM_LENGTH; ++j) {
         exps[i][j] = 0;
       }
-      /*
       if (this.orgs[i].getLifeSpan() >= SIM_LENGTH) {
         exps[i][SIM_LENGTH] = this.population[i];
       } else {
         exps[i][this.orgs[i].getLifeSpan()] = this.population[i];
       }
-      */
     }
 
     if (debugMode) printCurrentState(-1, eaten, dead, exps);
@@ -425,13 +428,12 @@ public class Sim {
       for (int j = 0; j < this.orgs.length; ++j) {
         int lastPop = this.population[j];
         if (this.population[j] > 0) {
+          this.population[j] -= exps[j][i];
+          dead[j] += exps[j][i];
+          exps[j][i] = 0;
           consume(j, eaten, dead, exps);
           produce(j);
           reproduce(j, exps[j], i);
-
-          int deaths = lastPop / this.orgs[j].getLifeSpan();
-          this.population[j] -= deaths;
-          dead[j] += deaths;
         }
         this.stability[j] =
           Math.abs(this.stability[j] + this.population[j] - lastPop) /
