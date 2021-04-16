@@ -108,11 +108,11 @@ public class Sim {
    * @ensures this.population decremented by n at index o
    */
   private void kill (int o, int n, int[] dead, int[][] exps) {
-    /*
+
     System.out.println("kill(" + o + ", " + n + ", " + Arrays.toString(dead) +
                        ", " + Arrays.toString(exps[o]) +
                        ")");
-    */
+
     /*
     ArrayList<int[]> validExps = new ArrayList<int[]>();
 
@@ -125,12 +125,18 @@ public class Sim {
     */
     while (n > 0) {
       int r = this.rand.nextInt(exps[o].length);
+      System.out.println("r = " + r);
       if (exps[o][r] > 0) {
         int m = this.rand.nextInt(Math.min(exps[o][r], n)) + 1;
+        System.out.println("m = " + m);
         exps[o][r] -= m;
+        System.out.println("exps[" + o + "][" + r + "] = " + exps[o][r]);
         this.population[o] -= m;
+        System.out.println("population[" + o + "] = " + this.population[o]);
         dead[o] += m;
+        System.out.println("dead[" + o + "] = " + dead[o]);
         n -= m;
+        System.out.println("n = " + n);
       }
       /*
       int m = this.rand.nextInt(Math.min(validExps.get(r)[0], n)) + 1;
@@ -157,11 +163,11 @@ public class Sim {
    * @ensures this.population decremented by n at index o
    */
   private int safeKill (int o, int n, int[] dead, int[][] exps) {
-    /*
+
     System.out.println("safeKill(" + o + ", " + n + ", " + Arrays.toString(dead)
                        + ", " + Arrays.toString(exps[o]) +
                        ")");
-    */
+
     if (n > this.population[o] || n < 0) return -1;
     kill(o, n, dead, exps);
     return this.population[o];
@@ -195,31 +201,46 @@ public class Sim {
                        + Arrays.toString(eaten) + ", " + Arrays.toString(dead) +
                        ", " + Arrays.toString(exps) + ")");
     int e = conRate;
+    System.out.println("e = " + e);
     if (rel == Input.DED) {
       while (e > 0) {
         int r = this.rand.nextInt(consumption.size());
+        System.out.println("r = " + r);
         if (dead[consumption.get(r).intValue()] > 0) {
           int n = this.rand.nextInt(Math.min(dead[consumption.get(r)
                                                   .intValue()], e)) + 1;
+          System.out.println("n = " + n);
           dead[consumption.get(r).intValue()] -= n;
+          System.out.println("dead[" + consumption.get(r).intValue() + "] = " +
+                             dead[consumption.get(r).intValue()]);
           eaten[consumption.get(r).intValue()] += n;
+          System.out.println("eaten[" + consumption.get(r).intValue() + "] = " +
+                             eaten[consumption.get(r).intValue()]);
           e -= n;
+          System.out.println("e = " + e);
         }
       }
     } else if (rel == Input.CON) {
       while (e > 0) {
         int r = this.rand.nextInt(consumption.size());
+        System.out.println("r = " + r);
+
+
+
         if (this.population[consumption.get(r).intValue()] > 0) {
           int n =
             this.rand.nextInt(Math.min(this.population[consumption.get(r)
                                                        .intValue()],
                                        e)) + 1;
+          System.out.println("n = " + n);
           /*
             safeKill called with eaten instead of dead because eaten organisms
             are not edible to detritivores, therefore not considered dead
           */
           safeKill(consumption.get(r).intValue(), n, eaten, exps);
+          System.out.println("safeKill returned to eat");
           e -= n;
+          System.out.println("e = " + n);
         }
       }
     }
@@ -251,7 +272,12 @@ public class Sim {
     ArrayList<Integer> consumptionDead = new ArrayList<Integer>();
 
     for (int i = 0; i < inputsNeeded.length; ++i) {
-      inputsNeeded[i] = org.getInputById(i - Input.NUM_INORGS) != null;
+      if (i < Input.NUM_INORGS) {
+        inputsNeeded[i] = org.getInputById(i - Input.NUM_INORGS) != null;
+      } else {
+        inputsNeeded[i] =
+          org.getInputById(this.orgs[i - Input.NUM_INORGS].getID()) != null;
+      }
     }
 
     for (int i = 0; i < Input.NUM_INORGS; ++i) {
