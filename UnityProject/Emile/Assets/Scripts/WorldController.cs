@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldController : MonoBehaviour
 {
-    public static WorldController Instance { get; private set; }
+    public static WorldController WC { get; private set; }
     public Hill[] hills;
 
     public enum Organism : ushort
@@ -34,34 +34,17 @@ public class WorldController : MonoBehaviour
     private float time; 
 
     //array to be filled with controllers 
-    private OrganismController[] organismControllers;
-
-    private OrganismController carnivoreController;
-    private OrganismController detritivoreController;
-    private OrganismController omnivoreController;
-    private OrganismController grazerController;
-    private OrganismController insectController;
-    private OrganismController shroomController;
-
-    private OrganismController treeController;
-
-
-    private OrganismController legumeController;
-    private OrganismController smallCarnivoreController;
-    private OrganismController molluskController;
-
-
-    public string message = "hey";
+    public OrganismController[] organismControllers;
 
     void Awake()
     {
-        if (Instance != null)
+        if (WC != null)
         {
-            Debug.LogError("There is more than one instance!");
+            Debug.LogError("There is more than one instance of World Controller!");
             return;
         }
 
-        Instance = this;
+        WC = this;
     }
 
 
@@ -71,7 +54,7 @@ public class WorldController : MonoBehaviour
     {
         //add all the controllers to the list 
         organismControllers = new OrganismController[15];
-        string[] controllerNames = new string[15] { "CarnivoreController", "DetritivoreController", "OmnivoreController", "GrazerController", "ShroomController", "MoldController", "TreeController", "FlowerController", "GrassController", "LegumeController", "VineController", "LichenController", "FernController", "SmallCarnivoreController", "MolluskController" };
+        string[] controllerNames = new string[16] { "CarnivoreController", "DetritivoreController", "OmnivoreController", "GrazerController", "InsectController", "ShroomController", "MoldController", "TreeController", "FlowerController", "GrassController", "LegumeController", "VineController", "LichenController", "FernController", "SmallCarnivoreController", "MolluskController" };
 
         for(int i = 0; i < 15; i++)
         {
@@ -128,8 +111,52 @@ public class WorldController : MonoBehaviour
         {
             time = time_since_reset; 
 
-            //TODO update the population values 
+            //TODO update the population values. Needs Sebastians sim script. 
+            
             
         }
     }
+
+
+    //can an organism be created that depends on an alive organism i? 
+    public bool CanDependOn(int i)
+    {
+        //can always depend on nothing
+        if (i == -1) return true;
+        Debug.Log(organismControllers[i].population - organismControllers[i].dependedOnNum); 
+        return organismControllers[i].population - organismControllers[i].dependedOnNum > 0; 
+    }
+    //can an organism be created that depends on an dead organism i? 
+    public bool CanDependOnDead(int i)
+    {
+        //can always depend on nothing
+        if (i == -1) return true;
+
+        return organismControllers[i].deadCount - organismControllers[i].dependedOnDeadNum > 0;
+    }
+
+    public void DependOn(int i) 
+    {
+        if (i == -1) return;
+        organismControllers[i].dependedOnNum++; 
+    }
+
+    public void DependOnDead(int i)
+    {
+        if (i == -1) return;
+        organismControllers[i].dependedOnDeadNum++;
+    }
+
+    public void UndoDependOn(int i)
+    {
+        if (i == -1) return;
+        organismControllers[i].dependedOnNum--;
+    }
+
+    public void UndoDependOnDead(int i)
+    {
+        if (i == -1) return;
+        organismControllers[i].dependedOnDeadNum--;
+    }
+
 }

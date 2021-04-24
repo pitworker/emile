@@ -10,7 +10,7 @@ public class Organism : MonoBehaviour
 
     public bool walking; 
 
-    private float offsetMultiplier = .2f;
+    private float offsetMultiplier = .1f;
     public float walkSpeed = 5.0f;
     public Hill hill;
     public float minRadius = 3.5f;
@@ -18,7 +18,11 @@ public class Organism : MonoBehaviour
     public float minScale = 3.0f;
     public float maxScale = 6.0f;
 
+    public int dependsOnOrganism = -1;
+    public int dependsOnDeadOrganism = -1;
 
+    public bool willBeDestroyed = false;
+    public bool visible;
 
     // Start is called before the first frame update
     void Start()
@@ -29,32 +33,61 @@ public class Organism : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if it should be destroyed and is offscreen, destroy
+        if(willBeDestroyed && Offscreen())
+        {
+            Destroy(gameObject); 
+        }
         //if walking, move around the hill 
         if(walking && hill)
         {
-            theta = theta + walkSpeed * Time.deltaTime * direction;
+            theta = (theta + walkSpeed * Time.deltaTime * direction) % 360;
             UpdatePosition();
+        }
+        //if sprite is hidden, check if it is off-screen and can become visible again 
+        if(!visible && Offscreen())
+        {
+            EnableRenderers(); 
         }
 
     }
 
+    bool Offscreen()
+    {
+        if(hill.transform.eulerAngles.z < 180)
+            return theta > 180 - hill.transform.eulerAngles.z && theta < 360 - hill.transform.eulerAngles.z;
+        else
+            return theta < 360 - hill.transform.eulerAngles.z || theta > 540  - hill.transform.eulerAngles.z;
+
+    }
+
+
     public void Randomize()
     {
-        //find an angle off the screen 
-        theta = Random.Range(-hill.transform.eulerAngles.z, -hill.transform.eulerAngles.z - 180 );
+        //randomize its starting position  
+        theta = Random.Range(0.0f, 360.0f);
+        
+        //randomize its height on the circle 
         r = Random.Range(minRadius, maxRadius);
+
+        //randomize the direction its facing
         if (Random.value < 0.5) direction = -1;
         UpdatePosition();
-        UpdateScale(); 
+        UpdateScale();
+
+        //keep sprites hidden for now
+        DisableRenderers(); 
     }
 
     public void UpdateScale()
     {
         transform.localScale = new Vector3(direction , 1.0f, 1.0f) * Random.Range(minScale, maxScale) / hill.transform.localScale.x;
-        if (GetComponent<SpriteRenderer>() != null) GetComponent<SpriteRenderer>().sortingOrder = 5000 - (int) (10 * transform.position.z);
+
+        //Note: The value must be between -32768 and 32767. In-game z position is between 0 and 250 
+        if (GetComponent<SpriteRenderer>() != null) GetComponent<SpriteRenderer>().sortingOrder = 32767 - (int) (transform.position.z / 200.0f * 65534.0f);
         foreach (Transform child in transform)
         {
-            if(child.GetComponent<SpriteRenderer>() != null) child.GetComponent<SpriteRenderer>().sortingOrder = 5000 - (int)(10 * transform.position.z);
+            if(child.GetComponent<SpriteRenderer>() != null) child.GetComponent<SpriteRenderer>().sortingOrder = 32767 - (int)(transform.position.z / 200.0f * 65534.0f);
         }
 
     }
@@ -66,6 +99,25 @@ public class Organism : MonoBehaviour
         //transform.rotation = Quaternion.Euler(0, 0, theta+90);
 
     }
+
+    void DisableRenderers()
+    {
+        visible = false; 
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<SpriteRenderer>() != null) child.GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
+
+    void EnableRenderers()
+    {
+        visible = true; 
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<SpriteRenderer>() != null) child.GetComponent<SpriteRenderer>().enabled = true;
+        }
+    }
+
     void FixedUpdate()
     {
 

@@ -132,8 +132,9 @@ MonoBehaviour:
   hill: {fileID: 0}
   minRadius: 3.5
   maxRadius: 4
-  minScale: 2
+  minScale: 1
   maxScale: 3
+  dependsOnOrganism: -1
 --- !u!1 &4819428470959727427
 GameObject:
   m_ObjectHideFlags: 0

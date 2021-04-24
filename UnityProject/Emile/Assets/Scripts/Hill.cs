@@ -14,7 +14,7 @@ public class Hill : MonoBehaviour
     {
         //unity default plane is 10x10
         scale = transform.localScale.x * 5f;
-        GetComponent<SpriteRenderer>().sortingOrder = 5000 - (int)(10 * transform.position.z);
+        GetComponent<SpriteRenderer>().sortingOrder = 32767 - (int)(transform.position.z / 200.0f * 65534.0f);
 
     }
 

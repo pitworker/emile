@@ -5,12 +5,18 @@ using UnityEngine;
 public class OrganismController : MonoBehaviour
 {
     public int population;
+    public int deadCount;
     public int startingPopulation;
-    public GameObject[] organismPrefabs;
-    public GameObject[] deadOrganismPrefabs;
+    public Organism[] organismPrefabs;
+    public Organism[] deadOrganismPrefabs;
 
-    private List<GameObject> organismList = new List<GameObject>();
-    private List<GameObject> deadOrganismList = new List<GameObject>();
+    public int dependedOnNum = 0;
+    public int dependedOnDeadNum = 0;
+
+    private List<Organism> organismList = new List<Organism>();
+    private List<Organism> deadOrganismList = new List<Organism>();
+
+    private float cleanDeadFrequency = 600.0f; 
 
     // Start is called before the first frame update
     void Start()
@@ -19,37 +25,97 @@ public class OrganismController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        //make the num spawned match the population
-        if(organismList.Count < population)
-        {
-            Hill hill = WorldController.Instance.hills[Random.Range(0, WorldController.Instance.hills.Length)]; 
-            GameObject newOrganism = Instantiate(organismPrefabs[Random.Range(0, organismPrefabs.Length)], new Vector3(0, 0, 0), Quaternion.identity);
-            organismList.Add(newOrganism);
-            newOrganism.transform.parent = hill.transform;
-            newOrganism.GetComponent<Organism>().hill = hill;
-            newOrganism.GetComponent<Organism>().Randomize(); 
+        updateLivingPrefabs();
+        updateDeadPrefabs();
 
-            //TO DO: spawn some dead guys if applicable 
+        //periodically delete dead prefabs 
+        InvokeRepeating("CleanDeadCount", cleanDeadFrequency, cleanDeadFrequency);
+    }
+
+    //make the num spawned match the population
+    void updateLivingPrefabs()
+    {
+        if (organismList.Count < population - dependedOnNum)
+        {
+            if (organismPrefabs.Length == 0) return;
+            Organism baseOrganism = organismPrefabs[Random.Range(0, organismPrefabs.Length)];
+
+            //only create the organism if its dependencies are there 
+            if (WorldController.WC.CanDependOn(baseOrganism.dependsOnOrganism) && WorldController.WC.CanDependOnDead(baseOrganism.dependsOnDeadOrganism))
+            {
+                Hill hill = WorldController.WC.hills[Random.Range(0, WorldController.WC.hills.Length)];
+                //update the dependedOnNum for the controllers this organism depends on 
+                WorldController.WC.DependOn(baseOrganism.dependsOnOrganism);
+                WorldController.WC.DependOnDead(baseOrganism.dependsOnDeadOrganism);
+
+                GameObject go = Instantiate(baseOrganism.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+                Organism newOrganism = go.GetComponent<Organism>();
+                organismList.Add(newOrganism);
+                newOrganism.transform.parent = hill.transform;
+                newOrganism.GetComponent<Organism>().hill = hill;
+                newOrganism.GetComponent<Organism>().Randomize();
+            }
         }
 
-        else if(organismList.Count > population)
+        else if (organismList.Count > population - dependedOnNum && organismList.Count > 0)
         {
-            GameObject destroyOrganism = organismList[0];
+            Organism destroyOrganism = organismList[0];
             organismList.RemoveAt(0);
-            Destroy(destroyOrganism); 
+
+            //update the dependedOnNum for the controllers this organism depends on 
+            WorldController.WC.UndoDependOn(destroyOrganism.dependsOnOrganism);
+            WorldController.WC.UndoDependOnDead(destroyOrganism.dependsOnDeadOrganism);
+
+            destroyOrganism.willBeDestroyed = true; 
+        }
+    }
+
+    void updateDeadPrefabs()
+    {
+        if (deadOrganismList.Count < deadCount - dependedOnDeadNum)
+        {
+            if (deadOrganismPrefabs.Length == 0) return; 
+            Organism baseOrganism = deadOrganismPrefabs[Random.Range(0, deadOrganismPrefabs.Length)];
+
+            Hill hill = WorldController.WC.hills[Random.Range(0, WorldController.WC.hills.Length)];
+
+            GameObject go = Instantiate(baseOrganism.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+            Organism newOrganism = go.GetComponent<Organism>();
+            deadOrganismList.Add(newOrganism);
+            newOrganism.transform.parent = hill.transform;
+            newOrganism.GetComponent<Organism>().hill = hill;
+            newOrganism.GetComponent<Organism>().Randomize();
+        }
+
+        else if (deadOrganismList.Count > population - dependedOnNum && deadOrganismList.Count > 0)
+        {
+            Organism destroyOrganism = deadOrganismList[0];
+            deadOrganismList.RemoveAt(0);
+
+            destroyOrganism.willBeDestroyed = true;
+        }
+    }
+
+
+    void CleanDeadCount()
+    {
+        if(deadCount > dependedOnDeadNum)
+        {
+            deadCount--; 
         }
     }
 
     public void reset()
     {
         population = startingPopulation;
+        deadCount = 0;
     }
     public void remove()
     {
         population = 0;
+        deadCount = 0;
     }
-
 
 }

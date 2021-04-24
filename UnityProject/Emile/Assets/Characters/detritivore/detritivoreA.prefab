@@ -51,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 40b2a8a13f4c307419d0da770a69f79b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,6 +150,12 @@ MonoBehaviour:
   walking: 1
   walkSpeed: 2
   hill: {fileID: 0}
+  minRadius: 3.5
+  maxRadius: 4
+  minScale: 3
+  maxScale: 6
+  dependsOnOrganism: -1
+  dependsOnDeadOrganism: -1
 --- !u!1 &4831821683743475112
 GameObject:
   m_ObjectHideFlags: 0
