@@ -9,40 +9,89 @@ public class KeyboardInput : MonoBehaviour
 
     public string str;
 
-    private WorldController wc; 
 
     // Start is called before the first frame update
     void Start()
     {
-        wc = GetComponent<WorldController>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (char c in Input.inputString)
+
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            if (c == '\b') // has backspace/delete been pressed?
-            {
-                if (str.Length != 0)
-                {
-                    str = str.Substring(0, str.Length - 1);
-                }
-            }
-            else if ((c == '\n') || (c == '\r')) // enter/return
-            {
-
-                displayText.text = str;
-                SendToWorldController();
-            }
-            else
-            {
-                str += c;
-            }
-
-
+            WorldController.WC.RotateHills();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            WorldController.WC.ResetAll();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            WorldController.WC.hardCodeSelection = 1;
+            WorldController.WC.Simulate();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            WorldController.WC.hardCodeSelection = 2;
+            WorldController.WC.Simulate();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            WorldController.WC.hardCodeSelection = 3;
+            WorldController.WC.Simulate();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            WorldController.WC.hardCodeSelection = 4;
+            WorldController.WC.Simulate();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            WorldController.WC.hardCodeSelection = 5;
+            WorldController.WC.Simulate();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            WorldController.WC.hardCodeSelection = 6;
+            WorldController.WC.Simulate();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            WorldController.WC.hardCodeSelection = 7;
+            WorldController.WC.Simulate();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            WorldController.WC.hardCodeSelection = 8;
+            WorldController.WC.Simulate();
+        }
+
+        //the correct code!
+        //foreach (char c in Input.inputString)
+        //{
+        //    if (c == '\b') // has backspace/delete been pressed?
+        //    {
+        //        if (str.Length != 0)
+        //        {
+        //            str = str.Substring(0, str.Length - 1);
+        //        }
+        //    }
+        //    else if ((c == '\n') || (c == '\r')) // enter/return
+        //    {
+
+        //        displayText.text = str;
+        //        SendToWorldController();
+        //    }
+        //    else
+        //    {
+        //        str += c;
+        //    }
+
+
+        //}
     }
 
     void SendToWorldController()
@@ -74,8 +123,8 @@ public class KeyboardInput : MonoBehaviour
 
         else
         {
-           // Debug.Log("parsed '" + str + "'.");
-            wc.Sync(o0, o1, o2, o3, time);
+            // Debug.Log("parsed '" + str + "'.");
+            WorldController.WC.Sync(o0, o1, o2, o3, time);
         }
 
         str = "";

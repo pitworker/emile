@@ -6,6 +6,10 @@ public class WorldController : MonoBehaviour
 {
     public static WorldController WC { get; private set; }
     public Hill[] hills;
+    private float simFrequency = 600.0f;
+
+    public int hardCodeSelection; 
+
 
     public enum Organism : ushort
     {
@@ -75,7 +79,7 @@ public class WorldController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        InvokeRepeating("Simulate", simFrequency, simFrequency);
     }
 
     public void Sync(int o0, int o1, int o2, int o3, float time_since_reset)
@@ -85,10 +89,10 @@ public class WorldController : MonoBehaviour
         if ((int)org0 != o0 || (int)org1 != o1 || (int)org2 != o2 || (int)org3 != o3 )
         {
             //remove current organisms
-            organismControllers[(int)org0].remove();
-            organismControllers[(int)org1].remove();
-            organismControllers[(int)org2].remove();
-            organismControllers[(int)org3].remove();
+            organismControllers[(int)org0].Remove();
+            organismControllers[(int)org1].Remove();
+            organismControllers[(int)org2].Remove();
+            organismControllers[(int)org3].Remove();
 
 
             //change the organisms in-game 
@@ -100,10 +104,10 @@ public class WorldController : MonoBehaviour
 
             //reset the populations
             time = 0f;
-            organismControllers[(int)org0].reset();
-            organismControllers[(int)org1].reset();
-            organismControllers[(int)org2].reset();
-            organismControllers[(int)org3].reset();
+            organismControllers[(int)org0].Reset();
+            organismControllers[(int)org1].Reset();
+            organismControllers[(int)org2].Reset();
+            organismControllers[(int)org3].Reset();
         }
 
         //otherwise 
@@ -111,11 +115,137 @@ public class WorldController : MonoBehaviour
         {
             time = time_since_reset; 
 
-            //TODO update the population values. Needs Sebastians sim script. 
             
             
         }
     }
+
+    public void RotateHills()
+    {
+        foreach(Hill h in hills)
+        {
+            h.transform.Rotate(0.0f, 0.0f, h.spinSpeed * 500); 
+        }
+        //update grass cover ASAP 
+        ((GrassController)organismControllers[9]).SpeedUpCover(); 
+    }
+
+    public void ResetAll()
+    {
+        foreach (OrganismController oc in organismControllers)
+        {
+            oc.Remove();
+        }
+    }
+    public void Simulate()
+    {
+        //currently hard coded for timelapse video. 
+        switch(hardCodeSelection)
+        {
+            //grass and flowers should multiply at around the same rate, insect 10x of that, and omnivore 0.25x of that
+            //Everything should level off after a certain point and remain relatively static
+            //flower 8, insect 4, grass 9, omnivore 2
+            case 1:
+                organismControllers[8].population = 10;
+                organismControllers[4].population = 10;
+                organismControllers[9].population = 10;
+                organismControllers[2].population = 10;
+
+                organismControllers[8].deadCount = 0;
+                organismControllers[4].deadCount = 0;
+                organismControllers[9].deadCount = 0;
+                organismControllers[2].deadCount = 0;
+                break;
+            case 2:
+                organismControllers[8].population = 10;
+                organismControllers[4].population = 10;
+                organismControllers[9].population = 100;
+                organismControllers[2].population = 10;
+
+                organismControllers[8].deadCount = 0;
+                organismControllers[4].deadCount = 0;
+                organismControllers[9].deadCount = 0;
+                organismControllers[2].deadCount = 0;
+                break;
+            case 3:
+                organismControllers[8].population = 0;
+                organismControllers[4].population = 0;
+                organismControllers[9].population = 0;
+                organismControllers[2].population = 0;
+
+                organismControllers[8].deadCount = 10;
+                organismControllers[4].deadCount = 10;
+                organismControllers[9].deadCount = 10;
+                organismControllers[2].deadCount = 10;
+                break;
+            case 4:
+                organismControllers[8].population = 100;
+                organismControllers[4].population = 10;
+                organismControllers[9].population = 10;
+                organismControllers[2].population = 10;
+
+                organismControllers[8].deadCount = 0;
+                organismControllers[4].deadCount = 0;
+                organismControllers[9].deadCount = 0;
+                organismControllers[2].deadCount = 0;
+                break;
+
+            //For the second one, grass should multiply around the same as in the first animation at first, but then die off after 3-4 days. All the flowers and carnivores should be gone by day 2, the mushroom should survive 2-3 days.
+            //flower 8, carnivore 0, grass 9, mushroom 5
+            case 5:
+                organismControllers[8].population = 10;
+                organismControllers[0].population = 10;
+                organismControllers[9].population = 10;
+                organismControllers[5].population = 10;
+
+                organismControllers[8].deadCount = 10;
+                organismControllers[0].deadCount = 0;
+                organismControllers[9].deadCount = 10;
+                organismControllers[5].deadCount = 10;
+                break;
+            case 6:
+                organismControllers[8].population = 10;
+                organismControllers[0].population = 0;
+                organismControllers[9].population = 10;
+                organismControllers[5].population = 10;
+
+                organismControllers[8].deadCount = 10;
+                organismControllers[0].deadCount = 10;
+                organismControllers[9].deadCount = 10;
+                organismControllers[5].deadCount = 10;
+                break;
+            case 7:
+                organismControllers[8].population = 10;
+                organismControllers[0].population = 10;
+                organismControllers[9].population = 10;
+                organismControllers[5].population = 100;
+
+                organismControllers[8].deadCount = 10;
+                organismControllers[0].deadCount = 10;
+                organismControllers[9].deadCount = 10;
+                organismControllers[5].deadCount = 10;
+                break;
+            case 8:
+                organismControllers[8].population = 0;
+                organismControllers[0].population = 0;
+                organismControllers[9].population = 0;
+                organismControllers[5].population = 0;
+
+                organismControllers[8].deadCount = 10;
+                organismControllers[0].deadCount = 10;
+                organismControllers[9].deadCount = 10;
+                organismControllers[5].deadCount = 10;
+                break;
+        }
+
+
+
+        //TODO update the population values. Needs Sebastians sim script. 
+
+
+    }
+
+
 
 
     //can an organism be created that depends on an alive organism i? 

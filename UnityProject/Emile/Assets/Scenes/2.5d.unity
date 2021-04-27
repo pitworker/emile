@@ -1210,8 +1210,8 @@ MonoBehaviour:
   - {fileID: 1151224603}
   - {fileID: 1117587016}
   - {fileID: 70351423}
+  hardCodeSelection: 0
   organismControllers: []
-  message: hey
 --- !u!114 &1186144496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1871,7 +1871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1846347920
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1987,6 +1987,7 @@ MonoBehaviour:
   dependedOnNum: 0
   dependedOnDeadNum: 0
   cover: 0
+  fullPopulation: 50
   hill1: {fileID: 1151224601}
   hill2: {fileID: 1117587017}
   hill3: {fileID: 70351424}

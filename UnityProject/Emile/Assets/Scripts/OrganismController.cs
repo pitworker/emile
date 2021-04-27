@@ -89,7 +89,7 @@ public class OrganismController : MonoBehaviour
             newOrganism.GetComponent<Organism>().Randomize();
         }
 
-        else if (deadOrganismList.Count > population - dependedOnNum && deadOrganismList.Count > 0)
+        else if (deadOrganismList.Count > deadCount - dependedOnDeadNum && deadOrganismList.Count > 0)
         {
             Organism destroyOrganism = deadOrganismList[0];
             deadOrganismList.RemoveAt(0);
@@ -107,12 +107,12 @@ public class OrganismController : MonoBehaviour
         }
     }
 
-    public void reset()
+    public void Reset()
     {
         population = startingPopulation;
         deadCount = 0;
     }
-    public void remove()
+    public void Remove()
     {
         population = 0;
         deadCount = 0;
