@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: 0.1
-  spinSpeed: 0.2
+  spinSpeed: 0.05
 --- !u!212 &70351424
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -301,6 +301,11 @@ MonoBehaviour:
   startingPopulation: 10
   organismPrefabs:
   - {fileID: 6644695462229142129, guid: 8aa0ef73c0ea0cf499c6451992bc1b72, type: 3}
+  - {fileID: 6644695462229142129, guid: ffd2afff784468041b8df085751f4014, type: 3}
+  - {fileID: 6644695462229142129, guid: d8c923e153e9c264a9f22a8ad6c131ab, type: 3}
+  - {fileID: 6644695462229142129, guid: 625f102cba175704687e543309e88dc3, type: 3}
+  - {fileID: 6644695462229142129, guid: 8e4b31319bd15144d87fa4e62b4364c1, type: 3}
+  - {fileID: 6644695462229142129, guid: 7d4a523135c597a469065710dab84f71, type: 3}
   deadOrganismPrefabs: []
   dependedOnNum: 0
   dependedOnDeadNum: 0
@@ -964,8 +969,8 @@ MonoBehaviour:
   organismPrefabs:
   - {fileID: 3193633562628048327, guid: 483aa41b2bb116140bcf99b18ba8f4e1, type: 3}
   - {fileID: 5707292421365304873, guid: 307107d1edbe777429b3ac7129ae18f2, type: 3}
+  deadOrganismPrefabs:
   - {fileID: -2309246914628080387, guid: 0c9a59be619b4d3459c270a7979ab5c9, type: 3}
-  deadOrganismPrefabs: []
   dependedOnNum: 0
   dependedOnDeadNum: 0
 --- !u!1 &1117587015
@@ -999,7 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: 0.1
-  spinSpeed: -0.3
+  spinSpeed: -0.075
 --- !u!212 &1117587017
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1161,7 +1166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: 0.1
-  spinSpeed: 0.4
+  spinSpeed: 0.1
 --- !u!1 &1186144493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,6 +1425,11 @@ MonoBehaviour:
   organismPrefabs:
   - {fileID: 8422052461076266394, guid: 61d61d5bb68c342438837c0c28c7139b, type: 3}
   - {fileID: 3880132948863253590, guid: 9675b5eeb0ac69548832d5d1e04d1fd5, type: 3}
+  - {fileID: 8422052461076266394, guid: a84e7ea0637e6aa46859e16354f29630, type: 3}
+  - {fileID: 8422052461076266394, guid: 24590fff5e574a843810a4d7e80ea0ec, type: 3}
+  - {fileID: 8422052461076266394, guid: 530664524851c08479abb4ef3314e6c2, type: 3}
+  - {fileID: 8422052461076266394, guid: ff8792e6aa70fe44894c1558dd6fd677, type: 3}
+  - {fileID: 8422052461076266394, guid: 0e89f1088290a8e4f9121714ba386025, type: 3}
   deadOrganismPrefabs: []
   dependedOnNum: 0
   dependedOnDeadNum: 0
@@ -1637,6 +1647,7 @@ MonoBehaviour:
   startingPopulation: 10
   organismPrefabs:
   - {fileID: 8356164108493087774, guid: 2e884fc8e4bae544a862671fd270f58d, type: 3}
+  - {fileID: 8356164108493087774, guid: 9fb5c4aa2b5629742a2d9392154876f0, type: 3}
   deadOrganismPrefabs: []
   dependedOnNum: 0
   dependedOnDeadNum: 0
@@ -1688,7 +1699,8 @@ MonoBehaviour:
   startingPopulation: 10
   organismPrefabs:
   - {fileID: 159390512517336901, guid: ba3179c2ec535c248b0c2a9b06612db8, type: 3}
-  deadOrganismPrefabs: []
+  deadOrganismPrefabs:
+  - {fileID: 159390512517336901, guid: a049b98c46974eb4594038ee85769ff3, type: 3}
   dependedOnNum: 0
   dependedOnDeadNum: 0
 --- !u!1 &1749593529
@@ -1986,7 +1998,8 @@ MonoBehaviour:
   deadOrganismPrefabs: []
   dependedOnNum: 0
   dependedOnDeadNum: 0
-  cover: 0
+  currentCover: 0.5
+  goalCover: 0.5
   fullPopulation: 50
   hill1: {fileID: 1151224601}
   hill2: {fileID: 1117587017}

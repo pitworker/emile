@@ -147,9 +147,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walking: 1
-  walkSpeed: 10
+  walkSpeed: -4
   hill: {fileID: 0}
-  minRadius: 5
-  maxRadius: 7
-  minScale: 1
-  maxScale: 2
+  minRadius: 3
+  maxRadius: 5
+  minScale: 0.5
+  maxScale: 1
+  dependsOnOrganism: -1
+  dependsOnDeadOrganism: -1
+  willBeDestroyed: 0
+  visible: 0

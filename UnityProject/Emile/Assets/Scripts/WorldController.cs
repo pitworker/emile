@@ -148,7 +148,7 @@ public class WorldController : MonoBehaviour
             case 1:
                 organismControllers[8].population = 10;
                 organismControllers[4].population = 10;
-                organismControllers[9].population = 10;
+                organismControllers[9].population = 20;
                 organismControllers[2].population = 10;
 
                 organismControllers[8].deadCount = 0;
@@ -157,10 +157,10 @@ public class WorldController : MonoBehaviour
                 organismControllers[2].deadCount = 0;
                 break;
             case 2:
-                organismControllers[8].population = 10;
-                organismControllers[4].population = 10;
-                organismControllers[9].population = 100;
-                organismControllers[2].population = 10;
+                organismControllers[8].population = 20;
+                organismControllers[4].population = 20;
+                organismControllers[9].population = 40;
+                organismControllers[2].population = 20;
 
                 organismControllers[8].deadCount = 0;
                 organismControllers[4].deadCount = 0;
@@ -168,46 +168,46 @@ public class WorldController : MonoBehaviour
                 organismControllers[2].deadCount = 0;
                 break;
             case 3:
-                organismControllers[8].population = 0;
-                organismControllers[4].population = 0;
-                organismControllers[9].population = 0;
-                organismControllers[2].population = 0;
+                organismControllers[8].population = 40;
+                organismControllers[4].population = 30;
+                organismControllers[9].population = 80;
+                organismControllers[2].population = 30;
+
+                organismControllers[8].deadCount = 5;
+                organismControllers[4].deadCount = 5;
+                organismControllers[9].deadCount = 5;
+                organismControllers[2].deadCount = 5;
+                break;
+            case 4:
+                organismControllers[8].population = 120;
+                organismControllers[4].population = 40;
+                organismControllers[9].population = 100;
+                organismControllers[2].population = 30;
 
                 organismControllers[8].deadCount = 10;
                 organismControllers[4].deadCount = 10;
                 organismControllers[9].deadCount = 10;
                 organismControllers[2].deadCount = 10;
                 break;
-            case 4:
-                organismControllers[8].population = 100;
-                organismControllers[4].population = 10;
-                organismControllers[9].population = 10;
-                organismControllers[2].population = 10;
-
-                organismControllers[8].deadCount = 0;
-                organismControllers[4].deadCount = 0;
-                organismControllers[9].deadCount = 0;
-                organismControllers[2].deadCount = 0;
-                break;
 
             //For the second one, grass should multiply around the same as in the first animation at first, but then die off after 3-4 days. All the flowers and carnivores should be gone by day 2, the mushroom should survive 2-3 days.
             //flower 8, carnivore 0, grass 9, mushroom 5
             case 5:
-                organismControllers[8].population = 10;
+                organismControllers[8].population = 20;
                 organismControllers[0].population = 10;
-                organismControllers[9].population = 10;
+                organismControllers[9].population = 20;
                 organismControllers[5].population = 10;
 
-                organismControllers[8].deadCount = 10;
+                organismControllers[8].deadCount = 0;
                 organismControllers[0].deadCount = 0;
-                organismControllers[9].deadCount = 10;
-                organismControllers[5].deadCount = 10;
+                organismControllers[9].deadCount = 0;
+                organismControllers[5].deadCount = 0;
                 break;
             case 6:
-                organismControllers[8].population = 10;
-                organismControllers[0].population = 0;
-                organismControllers[9].population = 10;
-                organismControllers[5].population = 10;
+                organismControllers[8].population = 0;
+                organismControllers[0].population = 10;
+                organismControllers[9].population = 40;
+                organismControllers[5].population = 20;
 
                 organismControllers[8].deadCount = 10;
                 organismControllers[0].deadCount = 10;
@@ -216,9 +216,9 @@ public class WorldController : MonoBehaviour
                 break;
             case 7:
                 organismControllers[8].population = 10;
-                organismControllers[0].population = 10;
-                organismControllers[9].population = 10;
-                organismControllers[5].population = 100;
+                organismControllers[0].population = 5;
+                organismControllers[9].population = 20;
+                organismControllers[5].population = 10;
 
                 organismControllers[8].deadCount = 10;
                 organismControllers[0].deadCount = 10;
@@ -235,6 +235,21 @@ public class WorldController : MonoBehaviour
                 organismControllers[0].deadCount = 10;
                 organismControllers[9].deadCount = 10;
                 organismControllers[5].deadCount = 10;
+                break;
+            case 9:
+                organismControllers[8].population = 0;
+                organismControllers[0].population = 0;
+                organismControllers[9].population = 0;
+                organismControllers[5].population = 0;
+                organismControllers[4].population = 0;
+                organismControllers[2].population = 0;
+
+                organismControllers[8].deadCount = 0;
+                organismControllers[0].deadCount = 0;
+                organismControllers[9].deadCount = 0;
+                organismControllers[5].deadCount = 0;
+                organismControllers[4].deadCount = 0;
+                organismControllers[2].deadCount = 0;
                 break;
         }
 

@@ -54,6 +54,7 @@ public class Organism : MonoBehaviour
 
     bool Offscreen()
     {
+        if (!hill) return true; 
         if(hill.transform.eulerAngles.z < 180)
             return theta > 180 - hill.transform.eulerAngles.z && theta < 360 - hill.transform.eulerAngles.z;
         else

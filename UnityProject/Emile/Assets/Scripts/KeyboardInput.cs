@@ -68,7 +68,11 @@ public class KeyboardInput : MonoBehaviour
             WorldController.WC.hardCodeSelection = 8;
             WorldController.WC.Simulate();
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            WorldController.WC.hardCodeSelection = 9;
+            WorldController.WC.Simulate();
+        }
         //the correct code!
         //foreach (char c in Input.inputString)
         //{

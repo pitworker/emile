@@ -149,8 +149,11 @@ MonoBehaviour:
   walking: 0
   walkSpeed: 5
   hill: {fileID: 0}
-  minRadius: 1
-  maxRadius: 4
+  minRadius: 2
+  maxRadius: 4.5
   minScale: 1
   maxScale: 3
   dependsOnOrganism: -1
+  dependsOnDeadOrganism: -1
+  willBeDestroyed: 0
+  visible: 0
